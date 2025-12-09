@@ -116,7 +116,7 @@ exports.createUser = async function (req, res, next) {
             emailId: emailId,
             primaryPhone: req.body.primaryPhone,
             alternatePhone: req.body.alternatePhone,
-            // address: req.body.address,
+            address: req.body.address,
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
