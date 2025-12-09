@@ -1,4 +1,5 @@
 var userprofile = require("../doa/user");
+var User = require("../model/user");
 var password = require("../doa/resetpassword");
 var log = require("../logger");
 var emailService = require("./email-sender");
@@ -91,15 +92,15 @@ exports.createUser = async function (req, res, next) {
         let existingUser = await userprofile.getOne({ emailId: emailId });
         console.log("existingUser", existingUser);
         if (existingUser) {
-            if (existingUser.studentId === req.body.studentId) {
-                return res.status(400).json({ error: "userprofile already exists with this studentId" });
+            if (existingUser.collageId === req.body.collageId) {
+                return res.status(400).json({ error: "userprofile already exists with this collage Id" });
             }
             return res.status(400).json({ error: "userprofile already exists with this email" });
         }
 
         // ✅ Generate next userId
-        let lastUser = await userprofile.getOne({ userId: -1 });
-        // console.log("lastUser", lastUser);
+        let lastUser = await User.findOne().sort({ userId: -1 }).lean();
+        console.log("lastUser", lastUser);
         let nextId;
         if (lastUser && lastUser.userId) {
             const lastIdNum = parseInt(lastUser.userId.replace("USER", "")) || 0;

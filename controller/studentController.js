@@ -1,4 +1,5 @@
 const Student = require("../doa/student");
+const studentModel = require("../model/student");
 // var datetime = new Date();
 var bcrypt = require("bcrypt");
 
@@ -41,8 +42,8 @@ exports.createStudent = async function (req, res, next) {
         }
 
         // ✅ Generate next userId
-        let lastStudent = await Student.getOne({ userId: -1 });
-        // console.log("lastUser", lastUser);
+        let lastStudent = await studentModel.findOne().sort({ userId: -1 }).lean();
+        console.log("lastStudent", lastStudent);
         let nextId;
         if (lastStudent && lastStudent.userId) {
             const lastIdNum = parseInt(lastStudent.userId.replace("USER", "")) || 0;
