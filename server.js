@@ -61,7 +61,7 @@ app.use(function (req, res, next) {
 
 // Root route - serve dashboard
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.send("Welcome to Mentra API");
 });
 
 // API routes
