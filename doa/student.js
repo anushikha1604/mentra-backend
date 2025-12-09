@@ -11,8 +11,8 @@ module.exports = {
         return await Student.find(query, {
             userId: 1,
             studentId: 1,
-            collegeId: 1,
-            collegeName: 1,
+            collageId: 1,
+            collageName: 1,
             course: 1,
             year: 1,
             fullName: 1,
@@ -82,8 +82,8 @@ module.exports = {
         return await Student.findOne(query, {
             userId: 1,
             studentId: 1,
-            collegeId: 1,
-            collegeName: 1,
+            collageId: 1,
+            collageName: 1,
             course: 1,
             year: 1,
             fullName: 1,
@@ -119,8 +119,8 @@ module.exports = {
         return await Student.findOne(query, {
             userId: 1,
             studentId: 1,
-            collegeId: 1,
-            collegeName: 1,
+            collageId: 1,
+            collageName: 1,
             course: 1,
             year: 1,
             fullName: 1,

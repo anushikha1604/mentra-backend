@@ -56,8 +56,8 @@ exports.createStudent = async function (req, res, next) {
         const newStudent = {
             userId: nextId,
             studentId: req.body.studentId,
-            collegeId: req.body.collegeId,
-            collegeName: req.body.collegeName,
+            collageId: req.body.collageId,
+            collageName: req.body.collageName,
             course: req.body.course,
             year: req.body.year,
             fullName: req.body.fullName,

@@ -125,7 +125,7 @@ exports.createUser = async function (req, res, next) {
             // confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 10),
             role: req.body.role,
             // gender: req.body.gender,
-            collegeId: req.body.collegeId,
+            collageId: req.body.collageId,
             // studentId: req.body.studentId,
             // collegeName: req.body.collegeName,
             // course: req.body.course,
@@ -143,6 +143,7 @@ exports.createUser = async function (req, res, next) {
 
         console.log("creating userprofile =====> ");
         let result = await userprofile.create(newuser);
+        console.log("User creation result:", result);
         return res.status(200).json({ message: "userprofile created successfully" });
 
     } catch (err) {
@@ -202,25 +203,31 @@ exports.updateUser = async function (req, res, next) {
             } else {
                 var newuser = {
                     fullName: req.body.fullName,
-                    emailId: req.body.emailId,
-                    primaryPhone: req.body.phoneNumber,
+                    emailId: emailId,
+                    primaryPhone: req.body.primaryPhone,
                     alternatePhone: req.body.alternatePhone,
                     address: req.body.address,
                     city: req.body.city,
                     state: req.body.state,
                     country: req.body.country,
                     pincode: req.body.pincode,
+                    password: bcrypt.hashSync(req.body.password, 10),
+                    // confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 10),
                     role: req.body.role,
-                    gender: req.body.gender,
-                    collegeId: req.body.collegeId,
-                    studentId: req.body.studentId,
-                    collegeName: req.body.collegeName,
-                    course: req.body.course,
-                    year: req.body.year,
-                    wishlistCompany: req.body.wishlistCompany,
+                    // gender: req.body.gender,
+                    collageId: req.body.collageId,
+                    // studentId: req.body.studentId,
+                    // collegeName: req.body.collegeName,
+                    // course: req.body.course,
+                    // year: req.body.year,
+                    // wishlistCompany: req.body.wishlistCompany,
                     agreeTerms: req.body.agreeTerms,
-                    DOB: req.body.dob,
+                    // DOB: req.body.dob,
+                    isActive: true,
+                    isDeleted: false,
+                    // createdBy: "admin",
                     updatedBy: "admin",
+                    // createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString(),
 
                 }
