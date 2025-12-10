@@ -1,4 +1,4 @@
-var employee = require("../controller/employee");
+var employee = require("../controller/company");
 var auth = require("../middlewares/validate-token");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});

@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var employeeSchema = require("../model/employee");
+var employeeSchema = require("../model/company");
 
 employeeSchema.statics = {
   create: async function (data) {

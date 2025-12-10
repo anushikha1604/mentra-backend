@@ -1,4 +1,4 @@
-var Employee = require("../doa/employee");
+var Employee = require("../doa/company");
 var User = require("../doa/user");
 var bcrypt = require("bcrypt");
 var emailService = require("./email-sender");
