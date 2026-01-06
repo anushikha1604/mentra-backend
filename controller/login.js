@@ -1,4 +1,5 @@
 var User = require("../doa/user");
+var Student = require("../doa/student");
 // var employee = require("../doa/user");
 var log = require("../logger");
 var bcrypt = require("bcrypt");
@@ -9,58 +10,56 @@ exports.getLogin = async function (req, res, next) {
   var responseObject = {};
   let verification = await new Promise(async (resolve, reject) => {
     let user = await User.getOne({ emailId: req.body.emailId });
-    if (user) {
-      // console.log(user);
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        // console.log("user role", user.role);
-        const token = jwt.sign(
-          {
-            emailId: req.body.emailId,
-            role: user.role,
-          },
-          process.env.JWT_KEY,
-          {
-            expiresIn: "2h",
-          },
-        );
-        if (
-          user.role == "student" ||
-          user.role == "admin" ||
-          user.role == "superadmin"
-        ) {
-          let data = await User.getOne({ emailId: req.body.emailId });
-          responseObject.code = 200;
-          responseObject.body = {
-            message: "Authorized",
-            token: token,
-            userDetails: user,
-            accessControl: data.accessControl,
-            // details: data,
-          };
-          resolve(responseObject);
-        } else {
-          responseObject.code = 200;
-          responseObject.body = {
-            message: "Authorized",
-            token: token,
-            userDetails: user,
-          };
-          resolve(responseObject);
-        }
-      } else {
-        responseObject.code = 401;
-        responseObject.body = { message: "Unauthorized" };
-        resolve(responseObject);
-      }
-    } else {
-      res.json({
-        error:
-          "Enquiry with this Email does not exist.Team will get back to you soon !",
+    let student = await Student.getOne({ emailId: req.body.emailId });
+
+    let account = user || student;
+
+    if (!account) {
+      return res.status(404).json({
+        error: "Enquiry with this Email does not exist. Team will get back to you soon!",
       });
-      // responseObject.code = 500;
-      // responseObject.body = 'Unable to Connect Database'
-      // reject(responseObject);
     }
+
+    // ✅ Password check
+    const isPasswordValid = bcrypt.compareSync(
+      req.body.password,
+      account.password
+    );
+
+    if (!isPasswordValid) {
+      responseObject.code = 401;
+      responseObject.body = { message: "Unauthorized" };
+      return resolve(responseObject);
+    }
+
+    // ✅ Token
+    const token = jwt.sign(
+      {
+        emailId: account.emailId,
+        role: account.role,
+      },
+      process.env.JWT_KEY,
+      { expiresIn: "2h" }
+    );
+
+    // ✅ Role validation
+    if (
+      ["student", "admin", "institute"].includes(account.role)
+    ) {
+      responseObject.code = 200;
+      responseObject.body = {
+        message: "Authorized",
+        token,
+        userDetails: account,
+        accessControl: account.accessControl,
+      };
+      return resolve(responseObject);
+    }
+
+    responseObject.code = 403;
+    responseObject.body = { message: "Access Denied" };
+    resolve(responseObject);
+
   });
   res.status(verification.code).json(verification.body);
 };

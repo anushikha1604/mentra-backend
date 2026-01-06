@@ -7,6 +7,9 @@ module.exports = function (router) {
     router.post("/createstudent", studentProfile.createStudent);
     // fetch profile
     router.get("/:id", studentProfile.getStudent);
+    // fetch all students
+
+    router.get("/allstudent", studentProfile.getStudents);
 
     // update profile
     router.put("/:id", studentProfile.updateStudent);

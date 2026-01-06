@@ -108,6 +108,30 @@ exports.getStudent = async (req, res) => {
     }
 };
 
+exports.getAllStudents = async (req, res, next) => {
+    try {
+        const students = await Student.getAll({});
+
+        if (!students || students.length === 0) {
+            return res.status(404).json({ error: "Student not found" });
+        }
+
+        return res.status(200).json({ data: students });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+exports.getStudents = async function (req, res, next) {
+    let result = await Student.get({});
+    if (result) {
+        res.status(200).json({ Student: result });
+    } else {
+        res.status(500).json({ error: "No data found" });
+    }
+};
+
+
 exports.updateStudent = async (req, res) => {
     try {
         const updates = req.body;
