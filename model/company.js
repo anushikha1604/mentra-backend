@@ -4,11 +4,11 @@ The code defines the schema for employee object.
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var employeeSchema = new Schema(
+var companySchema = new Schema(
   {
     companyId: {
       type: String,
-      unquie: true,
+      unique: true,
       required: true,
       index: true,
     },
@@ -59,4 +59,4 @@ var employeeSchema = new Schema(
     timestamps: true,
   },
 );
-module.exports = employeeSchema;
+module.exports = companySchema;

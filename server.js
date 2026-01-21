@@ -13,7 +13,7 @@ var db = require("./config/database");
 var router = express.Router();
 
 var loginRoutes = require("./api/login.route");
-var employeeRoutes = require("./api/employee.route");
+var companyRoutes = require("./api/company.route");
 var userRoutes = require("./api/user.route");
 var applicationsRoutes = require("./api/applications.route");
 var interviewsRoutes = require("./api/interviews.route");
@@ -67,7 +67,7 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/v1/Mentra", router);
 loginRoutes(router);
-employeeRoutes(router);
+companyRoutes(router);
 userRoutes(router);
 studentRoutes(router);
 applicationsRoutes(router);

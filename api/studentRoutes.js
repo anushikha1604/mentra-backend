@@ -1,24 +1,28 @@
 // const express = require("express");
 // const router = express.Router();
-var studentProfile = require("../controller/studentController");
+var Student = require("../controller/student");
 
 module.exports = function (router) {
     // create student profile
-    router.post("/createstudent", studentProfile.createStudent);
+    router.post("/createstudent", Student.createStudent);
     // fetch profile
-    router.get("/:id", studentProfile.getStudent);
+    router.get(
+        "/student/:id", Student.getStudentByStudentId
+    );
     // fetch all students
 
-    router.get("/allstudent", studentProfile.getStudents);
+    router.get(
+        "/students", Student.getAllStudents
+    );
 
     // update profile
-    router.put("/:id", studentProfile.updateStudent);
+    router.put("/student/:id", Student.updateStudent);
 
     // apply for a job
-    router.post("/:id/apply", studentProfile.applyToJob);
+    // router.post("/:id/apply", Student.applyToJob);
 
     // toggle wishlist company
-    router.post("/:id/wishlist", studentProfile.toggleWishlist);
+    // router.post("/:id/wishlist", Student.toggleWishlist);
 
     // module.exports = router;
 };

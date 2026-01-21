@@ -22,7 +22,7 @@ const studentSchema = new Schema({
         index: true
     },
     studentId: { type: String, required: true, unique: true, index: true },
-    collageId: { type: String },
+    collegeId: { type: String },
     fullName: { type: String, required: true },
     emailId: { type: String, required: true },
     primaryPhone: { type: String, required: true, length: 10 },
@@ -32,7 +32,7 @@ const studentSchema = new Schema({
     state: { type: String, required: true },
     country: { type: String, required: true },
     pincode: { type: String, required: true },
-    collageName: { type: String, required: true },
+    collegeName: { type: String, required: true },
     course: { type: String, required: true },
     year: { type: String, required: true },
     DOB: { type: Date, required: true },

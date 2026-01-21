@@ -57,8 +57,8 @@ exports.createStudent = async function (req, res, next) {
         const newStudent = {
             userId: nextId,
             studentId: req.body.studentId,
-            collageId: req.body.collageId,
-            collageName: req.body.collageName,
+            collegeId: req.body.collegeId,
+            collegeName: req.body.collegeName,
             course: req.body.course,
             year: req.body.year,
             fullName: req.body.fullName,
@@ -98,9 +98,19 @@ exports.createStudent = async function (req, res, next) {
 };
 
 
-exports.getStudent = async (req, res) => {
+exports.getStudentByStudentId = async (req, res) => {
     try {
-        const student = await Student.findById(req.params.id).populate("user", "fullName emailId");
+        const student = await Student.getById({ studentId: req.params.id });
+        if (!student) return res.status(404).json({ error: "student not found" });
+        return res.status(200).json({ data: student });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+exports.getStudentByUserId = async (req, res) => {
+    try {
+        const student = await Student.getById({ userId: req.params.id });
         if (!student) return res.status(404).json({ error: "student not found" });
         return res.status(200).json({ data: student });
     } catch (err) {
@@ -110,10 +120,10 @@ exports.getStudent = async (req, res) => {
 
 exports.getAllStudents = async (req, res, next) => {
     try {
-        const students = await Student.getAll({});
+        const students = await Student.get({});
 
         if (!students || students.length === 0) {
-            return res.status(404).json({ error: "Student not found" });
+            return res.status(404).json({ error: "Students not found" });
         }
 
         return res.status(200).json({ data: students });
@@ -122,14 +132,14 @@ exports.getAllStudents = async (req, res, next) => {
     }
 };
 
-exports.getStudents = async function (req, res, next) {
-    let result = await Student.get({});
-    if (result) {
-        res.status(200).json({ Student: result });
-    } else {
-        res.status(500).json({ error: "No data found" });
-    }
-};
+// exports.getStudents = async function (req, res, next) {
+//     let result = await Student.get({});
+//     if (result) {
+//         res.status(200).json({ Student: result });
+//     } else {
+//         res.status(500).json({ error: "No data found" });
+//     }
+// };
 
 
 exports.updateStudent = async (req, res) => {

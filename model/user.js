@@ -40,7 +40,7 @@ var userSchema = new Schema(
             enum: ["student", "institute", "admin"],
             default: "institute",
         },
-        collageId: {
+        collegeId: {
             type: String,
             required: false,
         },

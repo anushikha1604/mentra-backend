@@ -82,7 +82,6 @@ exports.createUser = async function (req, res, next) {
         if (!req.body) {
             return res.status(400).json({ error: "request body required" });
         }
-
         const emailId = req.body.emailId;
         if (!emailId) {
             return res.status(400).json({ error: "emailId is required" });
@@ -92,8 +91,8 @@ exports.createUser = async function (req, res, next) {
         let existingUser = await userprofile.getOne({ emailId: emailId });
         console.log("existingUser", existingUser);
         if (existingUser) {
-            if (existingUser.collageId === req.body.collageId) {
-                return res.status(400).json({ error: "userprofile already exists with this collage Id" });
+            if (existingUser.collegeId === req.body.collegeId) {
+                return res.status(400).json({ error: "userprofile already exists with this college Id" });
             }
             return res.status(400).json({ error: "userprofile already exists with this email" });
         }
@@ -126,7 +125,7 @@ exports.createUser = async function (req, res, next) {
             // confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 10),
             role: req.body.role,
             // gender: req.body.gender,
-            collageId: req.body.collageId,
+            collegeId: req.body.collegeId,
             // studentId: req.body.studentId,
             // collegeName: req.body.collegeName,
             // course: req.body.course,
@@ -216,7 +215,7 @@ exports.updateUser = async function (req, res, next) {
                     // confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 10),
                     role: req.body.role,
                     // gender: req.body.gender,
-                    collageId: req.body.collageId,
+                    collegeId: req.body.collegeId,
                     // studentId: req.body.studentId,
                     // collegeName: req.body.collegeName,
                     // course: req.body.course,
