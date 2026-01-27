@@ -82,7 +82,7 @@ exports.updateCompany = async (req, res) => {
     const updates = req.body;
     // Check for duplicate emailId
     let existingCompany = await Company.get({ emailId: updates.emailId });
-    if (existingCompany && existingCompany.length > 0) {
+    if (existingCompany && existingCompany.length > 0 && existingCompany[0].companyId !== req.params.id) {
       return res.status(400).json({ error: "Company already exists with this emailId" });
     }
     const company = await Company.update({ companyId: req.params.id }, updates);
