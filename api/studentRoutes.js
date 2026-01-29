@@ -7,7 +7,7 @@ module.exports = function (router) {
     router.post("/createstudent", Student.createStudent);
     // fetch profile
     router.get(
-        "/student/:id", Student.getStudentByStudentId
+        "/student/:id", Student.getStudentById
     );
     // fetch all students
 
@@ -17,6 +17,9 @@ module.exports = function (router) {
 
     // update profile
     router.put("/student/:id", Student.updateStudent);
+
+    // delete profile
+    router.delete("/student/:id", Student.deleteStudent);
 
     // apply for a job
     // router.post("/:id/apply", Student.applyToJob);

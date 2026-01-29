@@ -1,14 +1,14 @@
-const Student = require("../model/student");
-// const User = require("../model/user");
+// var mongoose = require("mongoose");
+var student = require("../model/student");
 
 module.exports = {
     create: async function (data) {
-        const student = new Student(data);
-        return await student.save();
+        var student = new this(data);
+        let result = await student.save();
+        return result;
     },
-
     get: async function (query) {
-        return await Student.find(query, {
+        let result = await student.find(query, {
             userId: 1,
             studentId: 1,
             collegeId: 1,
@@ -42,10 +42,11 @@ module.exports = {
             createdAt: 1,
             updatedAt: 1,
         });
+        return result;
     },
 
     getOne: async function (query) {
-        return await Student.findOne(query, {
+        let result = await student.findOne(query, {
             userId: 1,
             studentId: 1,
             collegeId: 1,
@@ -79,10 +80,11 @@ module.exports = {
             createdAt: 1,
             updatedAt: 1,
         });
+        return result;
     },
 
     getById: async function (query) {
-        return await Student.findOne(query, {
+        let result = await student.findOne(query, {
             userId: 1,
             studentId: 1,
             collegeId: 1,
@@ -116,10 +118,11 @@ module.exports = {
             createdAt: 1,
             updatedAt: 1,
         });
+        return result;
     },
 
     update: async function (query, updateData) {
-        return await Student.findOneAndUpdate(
+        return await student.findOneAndUpdate(
             query,
             { $set: updateData },
             { new: true }
@@ -127,28 +130,7 @@ module.exports = {
     },
 
     delete: async function (query) {
-        return await Student.findOneAndDelete(query);
+        return await student.findOneAndDelete(query);
     },
-
-    // applyToJob: async function (studentId, jobId) {
-    //     const student = await Student.findById(studentId);
-    //     if (!student) return null;
-    //     if (student.appliedJobs.some(a => a.job.toString() === jobId)) {
-    //         return student; // Already applied
-    //     }
-    //     student.appliedJobs.push({ job: jobId });
-    //     return await student.save();
-    // },
-
-    // toggleWishlist: async function (studentId, company) {
-    //     const student = await Student.findById(studentId);
-    //     if (!student) return null;
-    //     const idx = student.wishlistCompanies.indexOf(company);
-    //     if (idx >= 0) {
-    //         student.wishlistCompanies.splice(idx, 1);
-    //     } else {
-    //         student.wishlistCompanies.push(company);
-    //     }
-    //     return await student.save();
-    // },
 };
+

@@ -1,5 +1,5 @@
 const Student = require("../doa/student");
-const studentModel = require("../model/student");
+// const studentModel = require("../model/student");
 // var datetime = new Date();
 var bcrypt = require("bcrypt");
 
@@ -98,9 +98,9 @@ exports.createStudent = async function (req, res, next) {
 };
 
 
-exports.getStudentByStudentId = async (req, res) => {
+exports.getStudentById = async (req, res) => {
     try {
-        const student = await Student.getById({ studentId: req.params.id });
+        const student = await Student.getOne({ studentId: req.params.id });
         if (!student) return res.status(404).json({ error: "student not found" });
         return res.status(200).json({ data: student });
     } catch (err) {
@@ -145,9 +145,34 @@ exports.getAllStudents = async (req, res, next) => {
 exports.updateStudent = async (req, res) => {
     try {
         const updates = req.body;
-        const student = await Student.findByIdAndUpdate(req.params.id, updates, { new: true });
+        // Check for duplicate emailId
+        let existingStudent = await Student.get({ emailId: updates.emailId });
+
+        if (existingStudent && existingStudent.length > 0 && existingStudent[0].studentId !== req.params.id) {
+            // console.log("existingStudent", existingStudent);
+            // console.log("req.params.id", req.params.id);
+            // console.log("request body", req.body);
+            return res.status(400).json({ error: "Student already exists with this emailId" });
+        }
+        const student = await Student.update({ studentId: req.params.id }, updates);
+        // console.log("Updated student", student);
+        // ("existingStudent", existingStudent);
+        // console.log("req.params.id", req.params.id);
+        // console.log("request body", req.body);
         if (!student) return res.status(404).json({ error: "student not found" });
-        return res.status(200).json({ data: student });
+        return res.status(200).json({ message: "student updated successfully", data: student });
+    }
+    catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+// delete student
+exports.deleteStudent = async (req, res) => {
+    try {
+        const student = await Student.delete({ studentId: req.params.id });
+        if (!student) return res.status(404).json({ error: "student not found" });
+        return res.status(200).json({ message: "student deleted successfully" });
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }

@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+// var mongoose = require("mongoose");
 const User = require("../model/user"); // <-- this is the model, correct
 
 module.exports = {
